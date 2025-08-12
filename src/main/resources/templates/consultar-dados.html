@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Consulta de Dados</title>
+</head>
+<body>
+<h1>Produtos</h1>
+<table border="1">
+    <tr><th>ID</th><th>Nome</th><th>Preço</th></tr>
+    <tr th:each="p : ${produtos}">
+        <td th:text="${p.id}"></td>
+        <td th:text="${p.nome}"></td>
+        <td th:text="${p.preco}"></td>
+    </tr>
+</table>
+
+<h1>Clientes</h1>
+<table border="1">
+    <tr><th>ID</th><th>Nome</th><th>Email</th></tr>
+    <tr th:each="c : ${clientes}">
+        <td th:text="${c.id}"></td>
+        <td th:text="${c.nome}"></td>
+        <td th:text="${c.email}"></td>
+    </tr>
+</table>
+</body>
+</html>
