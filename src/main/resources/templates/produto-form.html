@@ -1,26 +1,45 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Cadastro de Produto</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8" />
+    <title th:text="${produto.id} == null ? 'Criar Produto' : 'Editar Produto'">Formulário Produto</title>
 </head>
 <body>
-<h1>Cadastro de Produto</h1>
+<h1 th:text="${produto.id} == null ? 'Criar Produto' : 'Editar Produto'"></h1>
 
-<form id="produtoForm">
+<!-- ALTERAÇÃO: definir o objeto do formulário -->
+<form th:object="${produto}"
+      th:action="${produto.id} == null ? @{/produto/criar} : @{/produto/editar/{id}(id=${produto.id})}"
+      method="post">
+
+    <label>ID:</label>
+    <input type="text" th:field="*{id}" readonly>
+    <br/>
+
     <label>Nome:</label>
-    <input type="text" id="nome" required>
-
-    <label>Preço:</label>
-    <input type="number" id="preco" step="0.01" required>
+    <input type="text" th:field="*{nome}" required />
+    <br/>
 
     <label>Descrição:</label>
-    <textarea id="descricao"></textarea>
+    <input type="text" th:field="*{descricao}" />
+    <br/>
+
+    <label>Preço:</label>
+    <input type="number" step="0.01" th:field="*{preco}" required />
+    <br/>
+
+    <label>Categoria:</label>
+    <input type="text" th:field="*{categoria}" />
+    <br/>
+
+    <label>Estoque:</label>
+    <input type="number" th:field="*{estoque}" />
+    <br/><br/>
 
     <button type="submit">Salvar</button>
+    <a href="/consultar-dados">Cancelar</a>
+    <span> | </span>
+    <a href="/cliente/criar">Criar Cliente</a>
 </form>
-
-<script src="js/produto.js"></script>
 </body>
 </html>

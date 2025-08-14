@@ -1,10 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8" />
+    <title th:text="${cliente.id} == null ? 'Criar Cliente' : 'Editar Cliente'">Formulário Cliente</title>
 </head>
 <body>
+<h1 th:text="${cliente.id} == null ? 'Criar Cliente' : 'Editar Cliente'"></h1>
 
+<!-- ALTERAÇÃO: definir o objeto do formulário -->
+<form th:object="${cliente}"
+      th:action="${cliente.id} == null ? @{/cliente/criar} : @{/cliente/editar/{id}(id=${cliente.id})}"
+      method="post">
+
+    <label>ID:</label>
+    <input type="text" th:field="*{id}" readonly>
+    <br/>
+
+    <label>Nome:</label>
+    <input type="text" th:field="*{nome}" required />
+    <br/>
+
+    <label>Email:</label>
+    <input type="email" th:field="*{email}" required />
+    <br/>
+
+    <label>Endereço:</label>
+    <input type="text" th:field="*{endereco}" />
+    <br/>
+
+    <label>Telefone:</label>
+    <input type="text" th:field="*{telefone}" />
+    <br/><br/>
+
+    <button type="submit">Salvar</button>
+    <a href="/consultar-dados">Cancelar</a>
+    <span> | </span>
+    <a href="/produto/criar">Criar Produto</a>
+</form>
 </body>
 </html>

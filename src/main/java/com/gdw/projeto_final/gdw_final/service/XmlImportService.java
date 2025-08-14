@@ -27,7 +27,13 @@ public class XmlImportService {
         List<Produto> produtos = parser.getProdutos();
         List<Cliente> clientes = parser.getClientes();
 
-        produtoRepository.saveAll(produtos);
-        clienteRepository.saveAll(clientes);
+        for (Produto produto : produtos) {
+            produto.setId(null); // força a geração automática
+            produtoRepository.save(produto);
+        }
+        for (Cliente cliente : clientes) {
+            cliente.setId(null); // força a geração automática
+            clienteRepository.save(cliente);
+        }
     }
 }

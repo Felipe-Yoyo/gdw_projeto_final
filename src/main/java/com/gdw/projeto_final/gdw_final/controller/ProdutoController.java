@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.Optional;
 
 @Controller
@@ -20,16 +19,17 @@ public class ProdutoController {
         this.produtoRepository = produtoRepository;
     }
 
-    // Formulário para criar novo Produto
     @GetMapping("/criar")
     public String criarForm(Model model) {
         model.addAttribute("produto", new Produto());
         return "produto-form";
     }
 
-    // Salvar novo Produto
+    // ALTERAÇÃO: @ModelAttribute("produto") para garantir binding com o th:object
     @PostMapping("/criar")
-    public String criar(Produto produto, BindingResult result, Model model) {
+    public String criar(@ModelAttribute("produto") Produto produto,
+                        BindingResult result,
+                        Model model) {
         if (result.hasErrors()) {
             return "produto-form";
         }
@@ -37,7 +37,6 @@ public class ProdutoController {
         return "redirect:/consultar-dados";
     }
 
-    // Formulário para editar Produto existente
     @GetMapping("/editar/{id}")
     public String editarForm(@PathVariable("id") Long id, Model model) {
         Optional<Produto> produto = produtoRepository.findById(id);
@@ -48,9 +47,12 @@ public class ProdutoController {
         return "produto-form";
     }
 
-    // Salvar edição do Produto
+    // ALTERAÇÃO: @ModelAttribute("produto") + setId(id) para consistência
     @PostMapping("/editar/{id}")
-    public String editar(@PathVariable("id") Long id, Produto produto, BindingResult result, Model model) {
+    public String editar(@PathVariable("id") Long id,
+                         @ModelAttribute("produto") Produto produto,
+                         BindingResult result,
+                         Model model) {
         if (result.hasErrors()) {
             return "produto-form";
         }
@@ -59,7 +61,6 @@ public class ProdutoController {
         return "redirect:/consultar-dados";
     }
 
-    // Excluir Produto
     @PostMapping("/excluir/{id}")
     public String excluir(@PathVariable("id") Long id) {
         produtoRepository.deleteById(id);

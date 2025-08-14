@@ -19,16 +19,17 @@ public class ClienteController {
         this.clienteRepository = clienteRepository;
     }
 
-    // Formulário para criar novo Cliente
     @GetMapping("/criar")
     public String criarForm(Model model) {
         model.addAttribute("cliente", new Cliente());
         return "cliente-form";
     }
 
-    // Salvar novo Cliente
+    // ALTERAÇÃO: @ModelAttribute("cliente") para casar com th:object
     @PostMapping("/criar")
-    public String criar(Cliente cliente, BindingResult result, Model model) {
+    public String criar(@ModelAttribute("cliente") Cliente cliente,
+                        BindingResult result,
+                        Model model) {
         if (result.hasErrors()) {
             return "cliente-form";
         }
@@ -36,7 +37,6 @@ public class ClienteController {
         return "redirect:/consultar-dados";
     }
 
-    // Formulário para editar Cliente existente
     @GetMapping("/editar/{id}")
     public String editarForm(@PathVariable("id") Long id, Model model) {
         Optional<Cliente> cliente = clienteRepository.findById(id);
@@ -47,9 +47,12 @@ public class ClienteController {
         return "cliente-form";
     }
 
-    // Salvar edição do Cliente
+    // ALTERAÇÃO: @ModelAttribute("cliente") + setId(id)
     @PostMapping("/editar/{id}")
-    public String editar(@PathVariable("id") Long id, Cliente cliente, BindingResult result, Model model) {
+    public String editar(@PathVariable("id") Long id,
+                         @ModelAttribute("cliente") Cliente cliente,
+                         BindingResult result,
+                         Model model) {
         if (result.hasErrors()) {
             return "cliente-form";
         }
@@ -58,7 +61,6 @@ public class ClienteController {
         return "redirect:/consultar-dados";
     }
 
-    // Excluir Cliente
     @PostMapping("/excluir/{id}")
     public String excluir(@PathVariable("id") Long id) {
         clienteRepository.deleteById(id);

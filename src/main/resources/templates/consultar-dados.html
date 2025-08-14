@@ -1,28 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Consulta de Dados</title>
 </head>
 <body>
 <h1>Produtos</h1>
+<a href="/produto/criar">Criar Produto</a>
 <table border="1">
-    <tr><th>ID</th><th>Nome</th><th>Preço</th></tr>
+    <tr>
+        <th>ID</th><th>Nome</th><th>Preço</th><th>Ações</th>
+    </tr>
     <tr th:each="p : ${produtos}">
-        <td th:text="${p.id}"></td>
-        <td th:text="${p.nome}"></td>
-        <td th:text="${p.preco}"></td>
+        <td th:text="${p.id}">ID</td>
+        <td th:text="${p.nome}">Nome</td>
+        <td th:text="${p.preco}">Preço</td>
+        <td>
+            <a th:href="@{'/produto/editar/' + ${p.id}}">Editar</a>
+            <form th:action="@{'/produto/excluir/' + ${p.id}}" method="post" style="display:inline;">
+                <button type="submit" onclick="return confirm('Confirma exclusão deste produto?');">Excluir</button>
+            </form>
+        </td>
     </tr>
 </table>
 
+<hr/>
+
 <h1>Clientes</h1>
+<a href="/cliente/criar">Criar Cliente</a>
 <table border="1">
-    <tr><th>ID</th><th>Nome</th><th>Email</th></tr>
+    <tr>
+        <th>ID</th><th>Nome</th><th>Email</th><th>Ações</th>
+    </tr>
     <tr th:each="c : ${clientes}">
-        <td th:text="${c.id}"></td>
-        <td th:text="${c.nome}"></td>
-        <td th:text="${c.email}"></td>
+        <td th:text="${c.id}">ID</td>
+        <td th:text="${c.nome}">Nome</td>
+        <td th:text="${c.email}">Email</td>
+        <td>
+            <a th:href="@{'/cliente/editar/' + ${c.id}}">Editar</a>
+            <form th:action="@{'/cliente/excluir/' + ${c.id}}" method="post" style="display:inline;">
+                <button type="submit" onclick="return confirm('Confirma exclusão deste cliente?');">Excluir</button>
+            </form>
+        </td>
     </tr>
 </table>
+
+<hr/>
+<a href="/upload">Voltar para Upload</a>
 </body>
 </html>
+
