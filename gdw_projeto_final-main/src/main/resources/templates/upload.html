@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Upload XML</title>
+    <link rel="stylesheet" href="style.css" th:href="@{styles.css}"></link>
+</head>
+<body>
+<h1>Upload de Arquivo XML</h1>
+<form action="/upload" method="post" enctype="multipart/form-data" id="upload_form">
+    <input type="file" name="xmlFile" accept=".xml" required>
+    <button type="submit">Enviar</button>
+</form>
+<p th:if="${mensagem}" th:text="${mensagem}"></p>
+<p th:if="${erro}" th:text="${erro}"></p>
+</body>
+</html>
